@@ -1,0 +1,10 @@
+bleach
+eventlet
+Flask
+Flask-Login
+Flask-SocketIO
+Flask-SQLAlchemy
+Flask-WTF
+greenlet
+gunicorn
+WTForms

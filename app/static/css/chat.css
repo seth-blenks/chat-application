@@ -1,0 +1,77 @@
+html,body{
+  height: 100%;
+  margin: 0px;
+  font-size: 1rem;
+  font-family: times new roman;
+}
+main{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  
+}
+
+.messages{
+  height: 90%;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-scrollbar-style: none;
+}
+
+.messages::-webkit-scrollbar{
+  display: none;
+}
+
+.message{
+  display: flex;
+  /*! align-items: center; */
+  /*! padding:3px 2px; */
+  /*! width: 100%; */
+  /*! background-color: red; */
+}
+
+.message img{
+  width: 50px;
+  height: 50px;
+}
+
+.message p{
+  display: inline-block;
+  background-color: blue;
+  padding: 0.3rem 0.4rem;
+  border-radius: 10px;
+  background-color: grey;
+}
+
+.message.right{
+ justify-content: flex-end;
+}
+
+.message.right p{
+  background-color: lightblue;
+}
+
+.message-box{
+  display: flex;
+  width: 100%;
+  height: 10%;
+}
+
+.message-box textarea{
+  width: 100%;
+  padding: 5px;
+  border: 1px solid lightblue;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.message-box button{
+  background-color: lightblue;
+  color: #fff;
+  border: 1px solid grey;
+  padding: 1rem;
+
+}

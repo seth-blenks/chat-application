@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Chat Rooms</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href='/static/css/bootstrap-grid.min.css' rel='stylesheet' />
+  <link href='/static/css/custom.css' rel='stylesheet' />
+  <link href='/static/css/chat.css' rel='stylesheet' />
+  <link href='/static/css/animate.css' rel='stylesheet'/>
+  <script src="https://kit.fontawesome.com/15df650a13.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <main class='col-10 col-lg-6 col-md-7'>
+    <div class='messages'>
+      <span> Start a conversation </span>
+      {% for message in messages %}
+      {% if message.user == current_user %}
+      <div class='message right'>
+          <p> {{message.message}}</p>
+          <img src='/static/images/{{message.user.image}}'>
+        </div>
+      {% else %}
+      <div class='message'>
+          <img src='/static/images/{{message.user.image}}'>
+          <p> {{message.message}}</p>
+        </div>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+
+    <div class='message-box col-10 col-lg-6 col-md-6'>
+        <textarea id='textarea'></textarea>
+        <button id='send-button'><i class='fa fa-paper-plane'></i></button>
+    </div>
+  </main>
+
+
+  <script src='/static/js/socket.io.min.js'></script>
+  <script>
+    let socket = io('/');
+    socket.emit('join',{'room':'1'})
+
+    socket.on('info',function(data){
+      console.log(data)
+    })  
+    socket.on('message', function(data){
+      message_box_append(data);
+    })
+
+    let send_button = document.querySelector('#send-button')
+    let textarea = document.querySelector('#textarea')
+    send_button.addEventListener('click',function(){
+      let message = textarea.value
+      if(message != ''){
+        socket.emit('message',{'message': message,'room': '1'})
+      }
+    })
+
+
+    function message_box_append(data){
+      console.log(data)
+      let messages = document.querySelector('.messages')
+      let username = data['username']
+      let div = document.createElement('div')
+      console.log('received message')
+      if(username == '{{current_user.username}}'){
+        div.innerHTML = `
+        <div class='message right'>
+          <p> ${data['message']}</p>
+          <img src='/static/images/${data['image']}'>
+        </div>
+        `
+      }else{
+        div.innerHTML = `
+        <div class='message'>
+          <img src='/static/images/${data['image']}'>
+          <p> ${data['message']}</p>
+        </div>
+        `
+      }
+      messages.appendChild(div);
+    }
+
+  </script>
+</body>
+</html>
